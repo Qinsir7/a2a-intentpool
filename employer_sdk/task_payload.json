@@ -1,0 +1,5 @@
+{
+    "task_type": "SMART_CONTRACT_AUDIT",
+    "target_code": "contract VulnerableBank { mapping(address => uint256) public balances; function withdraw() public { uint256 bal = balances[msg.sender]; require(bal > 0); (bool sent, ) = msg.sender.call{value: bal}(\"\"); require(sent); balances[msg.sender] = 0; } }",
+    "requirements": "Perform a security audit on the Solidity smart contract above. Identify specific vulnerabilities, explain the attack vectors, and provide the corrected code."
+  }

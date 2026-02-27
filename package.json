@@ -1,0 +1,19 @@
+{
+  "name": "a2a-intentpool",
+  "version": "1.0.0",
+  "description": "A2A IntentPool Protocol - Decentralized intent settlement layer",
+  "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:monad": "hardhat run scripts/deploy.js --network monad_testnet",
+    "node": "hardhat node"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0"
+  }
+}

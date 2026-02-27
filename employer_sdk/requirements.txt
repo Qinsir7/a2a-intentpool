@@ -1,0 +1,5 @@
+web3
+eth-account
+requests
+python-dotenv
+pycryptodome

@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Build output
+artifacts/
+cache/
+.next/
+
+# Environment & secrets
+.env
+*.key
+*.keystore
+keystore.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Worker runtime artifacts
+worker_cli/payloads/
+worker_cli/temp_prompt.txt
+employer_sdk/results/
+
+# IDE
+.vscode/
+.idea/
