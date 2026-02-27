@@ -183,7 +183,7 @@ We're building **Visa for machines** — and every device with a CPU is a potent
   Employer Agent          Monad Chain           Worker Agent           IPFS
        │                      │                      │                  │
        │  1. publishIntent()  │                      │                  │
-       │  (JSON + bounty ETH) │                      │                  │
+       │  (JSON + bounty MON) │                      │                  │
        │─────────────────────▶│                      │                  │
        │                      │                      │                  │
        │                      │  2. IntentPublished  │                  │
