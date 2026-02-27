@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { ethers } from "ethers";
 
@@ -57,9 +58,9 @@ function StatCard({ label, value, sub, icon, accent = "text-white" }: { label: s
   return (
     <div className="relative rounded-2xl border border-gray-800 bg-gray-900/50 p-6 overflow-hidden group hover:border-gray-700 transition-colors">
       <div className="absolute top-4 right-4 text-gray-800 group-hover:text-gray-700 transition-colors">{icon}</div>
-      <span className="text-xs text-gray-500 uppercase tracking-wider font-medium">{label}</span>
+      <span className="text-sm text-gray-500 uppercase tracking-wider font-medium">{label}</span>
       <div className={`text-3xl font-bold tracking-tight mt-2 ${accent}`}>{value}</div>
-      {sub && <span className="text-xs text-gray-600 mt-1 block">{sub}</span>}
+      {sub && <span className="text-sm text-gray-600 mt-1 block">{sub}</span>}
     </div>
   );
 }
@@ -201,9 +202,9 @@ export default function Explorer() {
       {/* Nav */}
       <nav className="fixed top-0 w-full z-50 glass">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold">A2</div>
-            <span className="text-lg font-bold tracking-tight text-white">IntentPool</span>
+          <Link href="/" className="flex items-center gap-2.5">
+            <Image src="/logo-white.png" alt="A2A IntentPool" width={28} height={28} className="rounded" />
+            <span className="text-base font-semibold tracking-tight text-white">IntentPool</span>
           </Link>
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2 text-sm">
@@ -211,10 +212,10 @@ export default function Explorer() {
                 {isConnected && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />}
                 <span className={`relative inline-flex rounded-full h-2 w-2 ${isConnected ? "bg-green-500" : "bg-yellow-500"}`} />
               </span>
-              <span className="text-gray-400 text-xs hidden sm:inline">{isConnected ? "Monad Testnet" : "Connecting..."}</span>
+              <span className="text-gray-400 text-sm hidden sm:inline">{isConnected ? "Monad Testnet" : "Connecting..."}</span>
             </div>
             <a href={`${EXPLORER_BASE}/address/${CONTRACT_ADDRESS}`} target="_blank" rel="noopener noreferrer"
-              className="text-xs text-gray-600 hover:text-purple-400 font-mono transition-colors hidden sm:inline">
+              className="text-sm text-gray-600 hover:text-purple-400 font-mono transition-colors hidden sm:inline">
               {CONTRACT_ADDRESS.substring(0, 8)}...{CONTRACT_ADDRESS.slice(-6)}
             </a>
           </div>
@@ -225,10 +226,10 @@ export default function Explorer() {
         {/* Header */}
         <div className="mb-10">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Protocol <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Explorer</span>
+            Intent <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Explorer</span>
           </h1>
           <div className="flex items-center gap-4 mt-3">
-            {lastUpdated && <p className="text-gray-600 text-xs">Last update: {lastUpdated.toLocaleTimeString()}</p>}
+            {lastUpdated && <p className="text-gray-600 text-sm">Last update: {lastUpdated.toLocaleTimeString()}</p>}
           </div>
         </div>
 
@@ -242,27 +243,27 @@ export default function Explorer() {
         {/* Protocol Dashboard */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
           <StatCard
-            label="TVL (Locked)"
+            label="Active Task Value"
             value={`${Number(ethers.formatEther(stats.tvl)).toFixed(4)}`}
-            sub="MON in active escrow"
+            sub="MON committed to open intents"
             accent="text-emerald-400"
-            icon={<svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
+            icon={<svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>}
           />
           <StatCard
             label="Total Intents"
             value={String(stats.totalIntents)}
-            sub={`${stats.settledCount} settled`}
+            sub={`${stats.settledCount} completed`}
             icon={<svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>}
           />
           <StatCard
-            label="Active Workers"
+            label="Worker Agents"
             value={String(stats.activeWorkers.size)}
-            sub="Unique solver addresses"
+            sub="Unique executor addresses"
             accent="text-blue-400"
             icon={<svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" /></svg>}
           />
           <StatCard
-            label="Active Employers"
+            label="Employer Agents"
             value={String(stats.activeEmployers.size)}
             sub="Unique requester addresses"
             accent="text-purple-400"
@@ -278,14 +279,14 @@ export default function Explorer() {
               <div className="px-6 py-5 border-b border-gray-800">
                 <h2 className="text-sm font-semibold text-white flex items-center gap-2">
                   <svg className="w-4 h-4 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
-                  Top Workers
+                  Top Agents
                 </h2>
-                <p className="text-[10px] text-gray-600 mt-1">Ranked by total earnings</p>
+                <p className="text-xs text-gray-600 mt-1">Ranked by tasks completed</p>
               </div>
               {topWorkers.length === 0 ? (
                 <div className="px-6 py-12 text-center">
                   <svg className="w-10 h-10 text-gray-800 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-                  <p className="text-gray-600 text-xs">No settled intents yet</p>
+                  <p className="text-gray-600 text-sm">No settled intents yet</p>
                 </div>
               ) : (
                 <ul className="divide-y divide-gray-800/50">
@@ -293,16 +294,16 @@ export default function Explorer() {
                     const medal = i === 0 ? "text-yellow-400" : i === 1 ? "text-gray-400" : i === 2 ? "text-orange-400" : "text-gray-700";
                     return (
                       <li key={addr} className="px-6 py-3.5 flex items-center gap-3 hover:bg-gray-800/30 transition-colors">
-                        <span className={`text-xs font-bold w-5 text-center ${medal}`}>
+                        <span className={`text-sm font-bold w-5 text-center ${medal}`}>
                           {i < 3 ? ["1st", "2nd", "3rd"][i] : `${i + 1}`}
                         </span>
                         <div className="flex-1 min-w-0">
                           <a href={`${EXPLORER_BASE}/address/${addr}`} target="_blank" rel="noopener noreferrer"
-                            className="font-mono text-xs text-gray-400 hover:text-purple-400 transition-colors truncate block">
+                            className="font-mono text-sm text-gray-400 hover:text-purple-400 transition-colors truncate block">
                             {addr.substring(0, 10)}...{addr.slice(-4)}
                           </a>
                         </div>
-                        <span className="text-xs text-emerald-400 font-semibold tabular-nums">
+                        <span className="text-sm text-emerald-400 font-semibold tabular-nums">
                           {Number(ethers.formatEther(earned)).toFixed(4)}
                         </span>
                       </li>
@@ -318,16 +319,16 @@ export default function Explorer() {
             <div className="rounded-2xl border border-gray-800 bg-gray-900/50 overflow-hidden">
               <div className="px-6 py-5 border-b border-gray-800 flex items-center justify-between">
                 <h2 className="text-sm font-semibold text-white">Intent Feed</h2>
-                <span className="text-xs text-gray-600 tabular-nums">{intents.length} records</span>
+                <span className="text-sm text-gray-600 tabular-nums">{intents.length} records</span>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
                   <thead>
-                    <tr className="text-[11px] text-gray-500 uppercase tracking-wider border-b border-gray-800/50">
+                    <tr className="text-xs text-gray-500 uppercase tracking-wider border-b border-gray-800/50">
                       <th className="px-6 py-3.5 font-medium">Intent ID</th>
                       <th className="px-6 py-3.5 font-medium">Task</th>
                       <th className="px-6 py-3.5 font-medium">Employer</th>
-                      <th className="px-6 py-3.5 font-medium text-right">Bounty</th>
+                      <th className="px-6 py-3.5 font-medium text-right">Reward</th>
                       <th className="px-6 py-3.5 font-medium text-center">Status</th>
                     </tr>
                   </thead>
@@ -340,7 +341,7 @@ export default function Explorer() {
                               <svg className="w-8 h-8 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
                             </div>
                             <p className="text-gray-600 text-sm">Waiting for intents...</p>
-                            <p className="text-gray-700 text-xs max-w-xs">No active intents in the pool. Once an Employer Agent broadcasts a task, it will appear here in real time.</p>
+                            <p className="text-gray-700 text-sm max-w-xs">No active intents in the pool. Once an Employer Agent broadcasts a task, it will appear here in real time.</p>
                           </div>
                         </td>
                       </tr>
@@ -350,7 +351,7 @@ export default function Explorer() {
                         return (
                           <tr key={intent.id} className="hover:bg-gray-800/20 transition-colors">
                             <td className="px-6 py-4">
-                              <div className="flex items-center font-mono text-blue-400 text-xs">
+                              <div className="flex items-center font-mono text-blue-400 text-sm">
                                 <a href={`${EXPLORER_BASE}/tx/${intent.id}`} target="_blank" rel="noopener noreferrer"
                                   className="hover:text-blue-300 transition-colors" title={intent.id}>
                                   {intent.id.substring(0, 14)}...
@@ -359,10 +360,10 @@ export default function Explorer() {
                               </div>
                             </td>
                             <td className="px-6 py-4">
-                              <span className="px-2.5 py-1 bg-gray-800/60 rounded-lg text-xs font-mono text-gray-300">{intent.taskType}</span>
+                              <span className="px-2.5 py-1 bg-gray-800/60 rounded-lg text-sm font-mono text-gray-300">{intent.taskType}</span>
                             </td>
                             <td className="px-6 py-4">
-                              <div className="flex items-center gap-1 font-mono text-gray-400 text-xs">
+                              <div className="flex items-center gap-1 font-mono text-gray-400 text-sm">
                                 <a href={`${EXPLORER_BASE}/address/${intent.employer}`} target="_blank" rel="noopener noreferrer"
                                   className="hover:text-purple-400 transition-colors" title={intent.employer}>
                                   {intent.employer.substring(0, 8)}...{intent.employer.slice(-4)}
@@ -372,7 +373,7 @@ export default function Explorer() {
                             </td>
                             <td className="px-6 py-4 text-right">
                               <span className="text-emerald-400 font-semibold tabular-nums">{intent.bounty}</span>
-                              <span className="text-gray-600 text-xs ml-1">MON</span>
+                              <span className="text-gray-600 text-sm ml-1">MON</span>
                             </td>
                             <td className="px-6 py-4 text-center">
                               <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ${sc.bg} ${sc.text} border ${sc.border}`}>
