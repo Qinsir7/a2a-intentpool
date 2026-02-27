@@ -26,7 +26,7 @@ CONFIG_PATH   = os.path.expanduser("~/.openclaw/config.json")
 def banner():
     print("""
     ================================================
-      A2A IntentPool Worker Node
+      A2A IntentPool Worker Agent
       powered by OpenClaw
     ================================================
     """)
@@ -205,7 +205,7 @@ def cmd_start(_args):
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
-        print("\n[*] Shutting down worker node...")
+        print("\n[*] Shutting down worker agent...")
         gw.terminate()
         listener.terminate()
         gw.join()
@@ -244,7 +244,7 @@ def main():
     parser = argparse.ArgumentParser(description="A2A IntentPool Worker CLI")
     subs = parser.add_subparsers(dest="command")
 
-    subs.add_parser("start", help="Start the worker node (auto-initializes on first run)")
+    subs.add_parser("start", help="Start the worker agent (auto-initializes on first run)")
 
     reset_p = subs.add_parser("reset", help="Reset configuration (keystore / jwt / gateway / all)")
     reset_p.add_argument(

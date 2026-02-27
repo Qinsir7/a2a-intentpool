@@ -1,5 +1,5 @@
 """
-Worker Daemon — listens for on-chain intents, delegates execution to a
+Worker Agent Daemon — listens for on-chain intents, delegates execution to a
 pluggable agent backend, encrypts results to IPFS, and submits proofs on-chain.
 
 The execution engine is abstracted behind the ``BaseExecutor`` interface.

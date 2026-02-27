@@ -131,10 +131,54 @@ A2A IntentPool 将系统收敛为三个极简的协议层，彻底解决「信�
 
 ---
 
+## 愿景：Intent 即机器世界的通用 API
+
+> _"Intent 不是 prompt — 它是结构化的、机器可读的工作指令。今天它是一个 JSON 字典，明天它就是机器经济的 HTTP。"_
+
+### 任意合法字典即任务
+
+协议接受**任意 JSON 载荷**作为意图模式。没有硬编码的任务分类 — 只要 Agent 能把工作描述为结构化数据，网络就能路由、执行和结算：
+
+| 任务类型 | 示例载荷字段 | 执行引擎 |
+|---------|------------|---------|
+| `SMART_CONTRACT_AUDIT` | `target_code`, `requirements` | OpenClaw / 自定义 LLM |
+| `API_INTEGRATION_TEST` | `endpoint`, `method`, `test_payload` | 确定性 HTTP 执行器 |
+| `DATA_ANALYSIS` | `data_source` (IPFS/S3), `requirements` | Pandas 流水线 / GPT-4 |
+| `MODEL_INFERENCE` | `model_id`, `input_tensor`, `config` | 本地 GPU 节点 |
+| `CONTENT_GENERATION` | `topic`, `format`, `word_count` | LLM Agent (LangChain, CrewAI) |
+
+### 从 CLI 到企业级微服务
+
+生产环境中，`employer_daemon.py` 可通过 Flask / FastAPI 演进为 HTTP 接口。其他微服务、SaaS 后端或编排系统可**编程式地派发意图** — 将结算层转化为企业级 RPC：
+
+```
+POST /api/v1/intents
+{
+  "payload": { "task_type": "MODEL_INFERENCE", ... },
+  "bounty_eth": 0.01,
+  "min_score": 80
+}
+→ 201 { "intent_id": "0xabc...", "status": "broadcasted" }
+```
+
+### 终局目标
+
+| 里程碑 | 描述 |
+|-------|------|
+| **多链部署** | 将结算合约部署至 EVM L2（Arbitrum、Base、Optimism）实现区域化路由 |
+| **Agent 市场** | 链上能力发现 — Agent 公示技能，Employer 按能力搜索 |
+| **验证者经济** | 声誉成为生息资产；高分 Agent 通过参与争议投票赚取费用 |
+| **JavaScript SDK** | 一等公民 TypeScript 客户端，支持浏览器原生 Agent 编排 |
+| **订阅式意图** | 带自动续期托管的周期性任务 — 机器经济的 cron job |
+
+我们在构建**机器世界的 Visa** — 每台有 CPU 的设备都是潜在节点。
+
+---
+
 ## 时序交互图
 
 ```
-  Employer Agent          Monad Chain           Worker Node            IPFS
+  Employer Agent          Monad Chain           Worker Agent           IPFS
        │                      │                      │                  │
        │  1. publishIntent()  │                      │                  │
        │  (JSON + 赏金 ETH)    │                      │                  │
@@ -231,9 +275,10 @@ a2a-intentpool/
 │   └── AgentIdentity.sol         # ERC-8004 链上身份
 ├── employer_sdk/                 # Employer Agent (Python 守护进程)
 │   ├── employer_daemon.py        # 无头结算代理
-│   ├── task_payload.json         # 示例任务定义
+│   ├── task_payload.json         # 演示任务载荷（生产环境请替换）
+│   ├── task_examples.md          # 真实场景任务载荷示例
 │   └── requirements.txt
-├── worker_cli/                   # Worker 节点 (Python CLI)
+├── worker_cli/                   # Worker Agent (Python CLI)
 │   ├── cli.py                    # 入口 + Keystore 管理
 │   ├── worker.py                 # 意图监听 + BaseExecutor
 │   ├── worker_gateway.py         # x.402 密钥交付网关
@@ -256,7 +301,7 @@ a2a-intentpool/
 - 持有测试代币的 Monad Testnet 钱包
 - [Pinata](https://app.pinata.cloud) 账号（用于 IPFS pinning）
 
-### Worker 节点（执行方）
+### Worker Agent（执行方）
 
 ```bash
 git clone https://github.com/Qinsir7/a2a-intentpool.git
@@ -275,7 +320,7 @@ pip install -r requirements.txt
 python employer_daemon.py
 ```
 
-首次运行交互录入私钥并持久化到 `.env`（权限 600），随后输入任务文件名即可发布意图。
+首次运行交互录入私钥并持久化到 `.env`（权限 600），随后输入任务文件名即可发布意图。参见 [`task_examples.md`](employer_sdk/task_examples.md) 获取真实场景载荷模板（API 测试、数据分析、模型推理等）。
 
 ### 协议浏览器
 

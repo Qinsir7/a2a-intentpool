@@ -133,10 +133,54 @@ The chain only handles hash verification and fund settlement. Large payloads (ex
 
 ---
 
+## The Vision: Intent as the Universal Machine API
+
+> _"An intent is not a prompt — it's a structured, machine-readable work order. Today it's a JSON dict. Tomorrow it's the HTTP of the machine economy."_
+
+### Any Valid Dict is a Task
+
+The protocol accepts **arbitrary JSON payloads** as intent schemas. There is no hardcoded task taxonomy — if an agent can describe work as structured data, the network can route, execute, and settle it:
+
+| Task Type | Example Payload Fields | Executor |
+|-----------|----------------------|----------|
+| `SMART_CONTRACT_AUDIT` | `target_code`, `requirements` | OpenClaw / custom LLM |
+| `API_INTEGRATION_TEST` | `endpoint`, `method`, `test_payload` | Deterministic HTTP runner |
+| `DATA_ANALYSIS` | `data_source` (IPFS/S3), `requirements` | Pandas pipeline / GPT-4 |
+| `MODEL_INFERENCE` | `model_id`, `input_tensor`, `config` | Local GPU node |
+| `CONTENT_GENERATION` | `topic`, `format`, `word_count` | LLM agent (LangChain, CrewAI) |
+
+### From CLI to Enterprise Microservice
+
+In production, the `employer_daemon.py` is designed to evolve into an HTTP service via Flask / FastAPI. Other microservices, SaaS backends, or orchestrators call it to **programmatically dispatch intents** — turning the settlement layer into an enterprise-grade RPC:
+
+```
+POST /api/v1/intents
+{
+  "payload": { "task_type": "MODEL_INFERENCE", ... },
+  "bounty_eth": 0.01,
+  "min_score": 80
+}
+→ 201 { "intent_id": "0xabc...", "status": "broadcasted" }
+```
+
+### The Endgame
+
+| Milestone | Description |
+|-----------|-------------|
+| **Multi-chain** | Deploy settlement contracts across EVM L2s (Arbitrum, Base, Optimism) for regional routing |
+| **Agent Marketplace** | On-chain capability discovery — agents advertise skills, employers search by competency |
+| **Verifier Economy** | Reputation becomes a yield-bearing asset; high-score agents earn fees by voting in disputes |
+| **JavaScript SDK** | First-class TypeScript client for browser-native agent orchestration |
+| **Subscription Intents** | Recurring tasks with auto-renewal escrow — cron jobs for the machine economy |
+
+We're building **Visa for machines** — and every device with a CPU is a potential node.
+
+---
+
 ## Sequence Diagram
 
 ```
-  Employer Agent          Monad Chain           Worker Node            IPFS
+  Employer Agent          Monad Chain           Worker Agent           IPFS
        │                      │                      │                  │
        │  1. publishIntent()  │                      │                  │
        │  (JSON + bounty ETH) │                      │                  │
@@ -234,9 +278,10 @@ a2a-intentpool/
 │   └── AgentIdentity.sol         # ERC-8004 on-chain identity
 ├── employer_sdk/                 # Employer Agent (Python daemon)
 │   ├── employer_daemon.py        # Headless settlement agent
-│   ├── task_payload.json         # Example task definition
+│   ├── task_payload.json         # Demo task payload (replace for production)
+│   ├── task_examples.md          # Real-world task payload examples
 │   └── requirements.txt
-├── worker_cli/                   # Worker Node (Python CLI)
+├── worker_cli/                   # Worker Agent (Python CLI)
 │   ├── cli.py                    # Entry point + keystore manager
 │   ├── worker.py                 # Intent listener + BaseExecutor
 │   ├── worker_gateway.py         # x.402 key delivery gateway
@@ -259,7 +304,7 @@ a2a-intentpool/
 - Monad Testnet wallet with test tokens
 - [Pinata](https://app.pinata.cloud) account for IPFS pinning
 
-### Worker Node
+### Worker Agent
 
 ```bash
 git clone https://github.com/Qinsir7/a2a-intentpool.git
@@ -278,7 +323,7 @@ pip install -r requirements.txt
 python employer_daemon.py
 ```
 
-First run prompts for private key → persists to `.env` (chmod 600). Then enter a task file name to publish intents.
+First run prompts for private key → persists to `.env` (chmod 600). Then enter a task file name to publish intents. See [`task_examples.md`](employer_sdk/task_examples.md) for real-world payload templates (API tests, data analysis, model inference, etc.).
 
 ### Protocol Explorer
 
