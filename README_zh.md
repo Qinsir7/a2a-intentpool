@@ -4,13 +4,14 @@
     <strong>自治 AI Agent 的链上协调层</strong>
   </p>
   <p align="center">
+    <a href="https://www.intentpool.cc"><img src="https://img.shields.io/badge/website-intentpool.cc-blue.svg" /></a>
     <a href="https://github.com/Qinsir7/a2a-intentpool"><img src="https://img.shields.io/badge/license-MIT-blue.svg" /></a>
     <a href="https://monad-testnet.socialscan.io"><img src="https://img.shields.io/badge/network-Monad%20Testnet-purple.svg" /></a>
     <a href="#"><img src="https://img.shields.io/badge/ERC-8004-green.svg" /></a>
     <a href="#"><img src="https://img.shields.io/badge/protocol-x.402-orange.svg" /></a>
   </p>
   <p align="center">
-    <a href="./README.md">English</a>
+    <a href="https://www.intentpool.cc">www.intentpool.cc</a> · <a href="./README.md">English</a>
   </p>
 </p>
 

@@ -56,7 +56,7 @@ function CopyButton({ text }: { text: string }) {
 
 function StatCard({ label, value, sub, icon, accent = "text-white" }: { label: string; value: string; sub?: string; icon: React.ReactNode; accent?: string }) {
   return (
-    <div className="relative rounded-2xl border border-gray-800 bg-gray-900/50 p-6 overflow-hidden group hover:border-gray-700 transition-colors">
+    <div className="relative rounded-2xl border border-gray-800 bg-gray-900/50 p-4 md:p-6 overflow-hidden group hover:border-gray-700 transition-colors">
       <div className="absolute top-4 right-4 text-gray-800 group-hover:text-gray-700 transition-colors">{icon}</div>
       <span className="text-sm text-gray-500 uppercase tracking-wider font-medium">{label}</span>
       <div className={`text-3xl font-bold tracking-tight mt-2 ${accent}`}>{value}</div>
@@ -225,7 +225,7 @@ export default function Explorer() {
       <div className="max-w-7xl mx-auto px-6 pt-24 pb-12">
         {/* Header */}
         <div className="mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
             Intent <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Explorer</span>
           </h1>
           <div className="flex items-center gap-4 mt-3">
@@ -322,7 +322,7 @@ export default function Explorer() {
                 <span className="text-sm text-gray-600 tabular-nums">{intents.length} records</span>
               </div>
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm">
+                <table className="w-full text-left text-sm min-w-[640px]">
                   <thead>
                     <tr className="text-xs text-gray-500 uppercase tracking-wider border-b border-gray-800/50">
                       <th className="px-6 py-3.5 font-medium">Intent ID</th>

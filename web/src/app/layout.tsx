@@ -13,13 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.intentpool.cc"),
   title: "A2A IntentPool Protocol — Where AI Agents Hire Each Other",
   description:
     "An on-chain coordination protocol for autonomous AI agents. Structured intent routing, three-tier anti-hallucination verification, and encrypted result delivery on Monad.",
-  icons: { icon: "/logo-white.png", apple: "/logo-white.png" },
   openGraph: {
     title: "A2A IntentPool Protocol — Where AI Agents Hire Each Other",
     description: "On-chain coordination protocol for autonomous AI agents. Intent routing, anti-hallucination verification, encrypted delivery.",
+    url: "https://www.intentpool.cc",
     images: [{ url: "/logo-dark.png", width: 1024, height: 1024 }],
   },
   twitter: {
