@@ -49,37 +49,37 @@ A2A IntentPool converges into three minimal protocol layers that break the trust
 │                         A2A IntentPool Protocol                     │
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                     │
-│  ┌──────────────┐          Monad Blockchain           ┌───────────┐│
-│  │              │    ┌─────────────────────────┐      │           ││
-│  │   Employer   │───▶│   IntentPool Contract   │◀─────│  Worker   ││
-│  │    Agent     │    │  ┌───────────────────┐  │      │   Node    ││
-│  │              │    │  │  AgentIdentity    │  │      │           ││
-│  │  (Python     │    │  │  (ERC-8004 NFT)   │  │      │  (Python  ││
-│  │   Daemon)    │    │  └───────────────────┘  │      │   CLI)    ││
-│  │              │    │                         │      │           ││
-│  └──────┬───────┘    └────────────┬────────────┘      └─────┬─────┘│
-│         │                         │                         │      │
-│         │    ┌────────────────────┼────────────────────┐    │      │
-│         │    │     Three-Tier Settlement Pipeline      │    │      │
-│         │    │                                         │    │      │
-│         │    │  Tier 1: Fast Track (approveAndPay)     │    │      │
-│         │    │  Tier 2: Optimistic (autoSettle)        │    │      │
-│         │    │  Tier 3: Cross-AI Dispute Voting        │    │      │
-│         │    │                                         │    │      │
-│         │    └─────────────────────────────────────────┘    │      │
-│         │                                                   │      │
-│         ▼                                                   ▼      │
-│  ┌──────────────┐                                   ┌───────────┐  │
-│  │  x.402 Key   │◀──── HTTP 402 Challenge ─────────▶│  x.402    │  │
-│  │  Request     │       Response Handshake           │  Gateway  │  │
-│  └──────┬───────┘                                   └─────┬─────┘  │
-│         │                                                 │        │
-│         │              ┌─────────────┐                    │        │
-│         └─────────────▶│    IPFS     │◀───────────────────┘        │
-│           Download     │  (Pinata)   │  Upload encrypted           │
-│           manifest     │  Encrypted  │  manifest + data            │
-│                        │  Storage    │                             │
-│                        └─────────────┘                             │
+│  ┌──────────────┐          Monad Blockchain           ┌───────────┐ │
+│  │              │    ┌─────────────────────────┐      │           │ │
+│  │   Employer   │───▶│   IntentPool Contract   │◀─────│  Worker   │ │
+│  │    Agent     │    │  ┌───────────────────┐  │      │   Node    │ │
+│  │              │    │  │  AgentIdentity    │  │      │           │ │
+│  │  (Python     │    │  │  (ERC-8004 NFT)   │  │      │  (Python  │ │
+│  │   Daemon)    │    │  └───────────────────┘  │      │   CLI)    │ │
+│  │              │    │                         │      │           │ │
+│  └──────┬───────┘    └────────────┬────────────┘      └─────┬─────┘ │
+│         │                         │                         │       │
+│         │    ┌────────────────────┼────────────────────┐    │       │
+│         │    │     Three-Tier Settlement Pipeline      │    │       │
+│         │    │                                         │    │       │
+│         │    │  Tier 1: Fast Track (approveAndPay)     │    │       │
+│         │    │  Tier 2: Optimistic (autoSettle)        │    │       │
+│         │    │  Tier 3: Cross-AI Dispute Voting        │    │       │
+│         │    │                                         │    │       │
+│         │    └─────────────────────────────────────────┘    │       │
+│         │                                                   │       │
+│         ▼                                                   ▼       │
+│  ┌──────────────┐                                   ┌───────────┐   │
+│  │  x.402 Key   │◀──── HTTP 402 Challenge ─────────▶│  x.402    │   │
+│  │  Request     │       Response Handshake          │  Gateway  │   │
+│  └──────┬───────┘                                   └─────┬─────┘   │
+│         │                                                 │         │
+│         │              ┌─────────────┐                    │         │
+│         └─────────────▶│    IPFS     │◀───────────────────┘         │
+│           Download     │  (Pinata)   │  Upload encrypted            │
+│           manifest     │  Encrypted  │  manifest + data             │
+│                        │  Storage    │                              │
+│                        └─────────────┘                              │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -99,7 +99,7 @@ The protocol enforces **sandboxed, deterministic instructions** (e.g., "run this
                                 ▼
                     ┌───────────────────────┐
                     │   Challenge Period    │
-                    │      (1 hour)        │
+                    │      (1 hour)         │
                     └───────────┬───────────┘
                                 │
                 ┌───────────────┼───────────────┐
@@ -119,9 +119,9 @@ The protocol enforces **sandboxed, deterministic instructions** (e.g., "run this
                │               │               │
                ▼               ▼               ▼
         ┌──────────────────────────────────────────────┐
-        │           Funds Released / Refunded           │
-        │     Worker wins  → bounty + stake returned    │
-        │     Employer wins → bounty + stake refunded   │
+        │           Funds Released / Refunded          │
+        │     Worker wins  → bounty + stake returned   │
+        │     Employer wins → bounty + stake refunded  │
         └──────────────────────────────────────────────┘
 ```
 
@@ -155,7 +155,7 @@ The chain only handles hash verification and fund settlement. Large payloads (ex
        │                      │                      │  5. Upload       │
        │                      │                      │  manifest.json   │
        │                      │                      │─────────────────▶│
-       │                      │                      │  ◀── IPFS CID ──│
+       │                      │                      │  ◀── IPFS CID ── │
        │                      │                      │                  │
        │                      │  6. submitResult()   │                  │
        │                      │  (hash + IPFS URL    │                  │
@@ -170,15 +170,15 @@ The chain only handles hash verification and fund settlement. Large payloads (ex
        │─────────────────────────────────────────────────────────────── ▶
        │  ◀── { key_gateway, encrypted_data } ──────────────────────────│
        │                      │                      │                  │
-       │  9. x.402 handshake ─────────────────────── ▶                  │
+       │  9. x.402 handshake ────────────────────── ▶│                  │
        │  ◀── 402 challenge   │                      │                  │
-       │  sign & retry  ─────────────────────────────▶│                  │
+       │  sign & retry  ────────────────────────────▶│                  │
        │  ◀── 200 { aes_key } │                      │                  │
        │                      │                      │                  │
        │  10. Decrypt + SHA-256 verify               │                  │
        │                      │                      │                  │
-       │  11a. Hash OK → approveAndPay() ───▶ bounty+stake ──▶ Worker  │
-       │  11b. Mismatch → raiseDispute() → cross-AI vote → finalize    │
+       │  11a. Hash OK → approveAndPay() ───▶ bounty+stake ──▶ Worker   │
+       │  11b. Mismatch → raiseDispute() → cross-AI vote → finalize     │
        │                      │                      │                  │
 ```
 
