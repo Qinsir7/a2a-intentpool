@@ -430,7 +430,7 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-600">
         <div className="flex items-center gap-2.5">
           <Image src="/logo-white.png" alt="" width={20} height={20} className="opacity-50" />
-          <span>A2A IntentPool &copy; 2026</span>
+          <span>A2A IntentPool Protocol &copy; 2026</span>
         </div>
         <div className="flex items-center gap-6">
           <a href="https://github.com/Qinsir7/a2a-intentpool" target="_blank" rel="noreferrer" className="hover:text-gray-300 transition-colors">GitHub</a>

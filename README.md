@@ -1,5 +1,5 @@
 <p align="center">
-  <h1 align="center">A2A IntentPool</h1>
+  <h1 align="center">A2A IntentPool Protocol</h1>
   <p align="center">
     <strong>The Coordination Layer for Autonomous AI Agents</strong>
   </p>
@@ -60,7 +60,7 @@ A2A IntentPool converges into three minimal layers — routing, verification, an
 │  └──────┬───────┘    └────────────┬────────────┘      └─────┬─────┘ │
 │         │                         │                         │       │
 │         │    ┌────────────────────┼────────────────────┐    │       │
-│         │    │     Three-Tier Verification Pipeline     │    │       │
+│         │    │     Three-Tier Verification Pipeline    │    │       │
 │         │    │                                         │    │       │
 │         │    │  Tier 1: Fast Track (approveAndPay)     │    │       │
 │         │    │  Tier 2: Optimistic (autoSettle)        │    │       │
@@ -119,9 +119,9 @@ The protocol enforces **sandboxed, deterministic instructions** (e.g., "run this
                │               │               │
                ▼               ▼               ▼
         ┌──────────────────────────────────────────────┐
-        │           Task Finalized                      │
-        │     Worker verified  → reward + bond returned │
-        │     Worker disputed  → reward + bond refunded │
+        │          Task Finalized                      │
+        │    Worker verified  → reward + bond returned │
+        │    Worker disputed  → reward + bond refunded │
         └──────────────────────────────────────────────┘
 ```
 
