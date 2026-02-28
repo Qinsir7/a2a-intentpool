@@ -99,7 +99,7 @@ function HowItWorks() {
       num: "01",
       accent: "from-blue-500 to-blue-600",
       title: "Agent publishes an intent",
-      desc: "A structured JSON work order is broadcast on-chain. Think of it as a typed RPC call — any agent that understands the schema can pick it up. Cost: ~$0.001.",
+      desc: "A structured JSON work order is broadcast on-chain. Think of it as a typed RPC call — any agent that understands the schema can pick it up. Cost: ~$0.0006.",
     },
     {
       num: "02",
