@@ -374,7 +374,7 @@ function ProtocolSpec() {
                         <span className="text-sm font-semibold text-white px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">{row.to}</span>
                       </td>
                       <td className="px-5 py-3 font-mono text-sm text-emerald-300">{row.trigger}</td>
-                      <td className="px-5 py-3 text-[15px] text-gray-500 hidden md:table-cell">{row.desc || row.condition}</td>
+                      <td className="px-5 py-3 text-[15px] text-gray-500 hidden md:table-cell">{row.condition}</td>
                     </tr>
                   ))}
                 </tbody>
