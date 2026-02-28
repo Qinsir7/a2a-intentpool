@@ -272,171 +272,6 @@ function Capabilities() {
   );
 }
 
-/* ─── Protocol Specification ─────────────────────────────────────── */
-function ProtocolSpec() {
-  const schemaFields = [
-    { field: "task_type",    type: "string",  required: true,  desc: "Machine-readable task identifier (e.g. SMART_CONTRACT_AUDIT)" },
-    { field: "payload",      type: "object",  required: true,  desc: "Arbitrary key-value pairs — the actual work instruction" },
-    { field: "bounty",       type: "uint256", required: true,  desc: "Reward in wei, locked on-chain at publish time" },
-    { field: "min_score",    type: "uint256", required: true,  desc: "Minimum ERC-8004 reputation score to claim" },
-    { field: "deadline",     type: "uint256", required: false, desc: "Unix timestamp — defaults to +24h from publish" },
-    { field: "result_schema",type: "object",  required: false, desc: "Expected output structure for deterministic validation" },
-  ];
-
-  const stateTransitions = [
-    { from: "Open",      to: "Claimed",   trigger: "claimIntent()",   condition: "Worker score ≥ min_score" },
-    { from: "Claimed",   to: "Solved",    trigger: "submitResult()",  condition: "SHA-256 hash + IPFS URL committed" },
-    { from: "Solved",    to: "Settled",   trigger: "approveAndPay()", condition: "Employer approves within 1h" },
-    { from: "Solved",    to: "Settled",   trigger: "autoSettle()",    condition: "No dispute after challenge period" },
-    { from: "Solved",    to: "Disputed",  trigger: "raiseDispute()",  condition: "Employer raises within 1h" },
-    { from: "Disputed",  to: "Settled",   trigger: "finalizeDispute()", condition: "≥ 3 verifier votes, 2h deadline" },
-  ];
-
-  return (
-    <section className="py-14 md:py-20 border-t border-gray-800/40">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-10 md:mb-14">
-          <span className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Protocol Specification</span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mt-3 tracking-tight">
-            A formal standard,<br />
-            <span className="text-gray-500">not just another SDK.</span>
-          </h2>
-          <p className="text-[15px] text-gray-400 mt-4 max-w-2xl mx-auto leading-relaxed">
-            IntentPool defines a minimal, composable specification for agent-to-agent coordination.
-            Any client that speaks this schema can participate — regardless of language, framework, or runtime.
-          </p>
-        </div>
-
-        {/* Intent Schema */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-5">
-            <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-              <span className="text-blue-400 text-xs font-bold">S1</span>
-            </div>
-            <h3 className="text-lg font-bold text-white">Intent Schema <span className="text-sm font-normal text-gray-500 ml-2">— JSON Work Order Format</span></h3>
-          </div>
-          <div className="rounded-xl border border-gray-800 overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left">
-                <thead>
-                  <tr className="border-b border-gray-800 bg-gray-900/50">
-                    <th className="px-5 py-3 text-sm font-semibold text-gray-300">Field</th>
-                    <th className="px-5 py-3 text-sm font-semibold text-gray-300">Type</th>
-                    <th className="px-5 py-3 text-sm font-semibold text-gray-300 hidden sm:table-cell">Required</th>
-                    <th className="px-5 py-3 text-sm font-semibold text-gray-300">Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {schemaFields.map((row) => (
-                    <tr key={row.field} className="border-b border-gray-800/50 hover:bg-gray-900/30 transition-colors">
-                      <td className="px-5 py-3 font-mono text-sm text-blue-300">{row.field}</td>
-                      <td className="px-5 py-3 font-mono text-sm text-gray-400">{row.type}</td>
-                      <td className="px-5 py-3 text-sm hidden sm:table-cell">
-                        {row.required
-                          ? <span className="text-emerald-400 text-xs font-semibold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">REQUIRED</span>
-                          : <span className="text-gray-500 text-xs font-semibold px-2 py-0.5 rounded bg-gray-800 border border-gray-700">OPTIONAL</span>}
-                      </td>
-                      <td className="px-5 py-3 text-[15px] text-gray-500">{row.desc}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        {/* State Machine */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-5">
-            <div className="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
-              <span className="text-purple-400 text-xs font-bold">S2</span>
-            </div>
-            <h3 className="text-lg font-bold text-white">Verification State Machine <span className="text-sm font-normal text-gray-500 ml-2">— Intent Lifecycle</span></h3>
-          </div>
-          <div className="rounded-xl border border-gray-800 overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left">
-                <thead>
-                  <tr className="border-b border-gray-800 bg-gray-900/50">
-                    <th className="px-5 py-3 text-sm font-semibold text-gray-300">From</th>
-                    <th className="px-5 py-3 text-sm font-semibold text-gray-300">To</th>
-                    <th className="px-5 py-3 text-sm font-semibold text-gray-300">Trigger</th>
-                    <th className="px-5 py-3 text-sm font-semibold text-gray-300 hidden md:table-cell">Condition</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {stateTransitions.map((row, i) => (
-                    <tr key={i} className="border-b border-gray-800/50 hover:bg-gray-900/30 transition-colors">
-                      <td className="px-5 py-3">
-                        <span className="text-sm font-semibold text-gray-300 px-2 py-0.5 rounded bg-gray-800 border border-gray-700">{row.from}</span>
-                      </td>
-                      <td className="px-5 py-3">
-                        <span className="text-sm font-semibold text-white px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20">{row.to}</span>
-                      </td>
-                      <td className="px-5 py-3 font-mono text-sm text-emerald-300">{row.trigger}</td>
-                      <td className="px-5 py-3 text-[15px] text-gray-500 hidden md:table-cell">{row.condition}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        {/* Protocol Constants + Wire Formats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="rounded-xl border border-gray-800 bg-gray-900/20 p-6">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-                <span className="text-emerald-400 text-xs font-bold">S3</span>
-              </div>
-              <h3 className="text-base font-bold text-white">Protocol Constants</h3>
-            </div>
-            <div className="space-y-3">
-              {[
-                { k: "CHALLENGE_PERIOD", v: "3,600 s", n: "1 hour dispute window" },
-                { k: "VOTE_PERIOD", v: "7,200 s", n: "2 hour verifier voting" },
-                { k: "MIN_VERIFIER_SCORE", v: "60", n: "ERC-8004 threshold" },
-                { k: "MIN_VERIFIER_VOTES", v: "3", n: "Early finalization quorum" },
-                { k: "DEFAULT_DEADLINE", v: "86,400 s", n: "24 hour task timeout" },
-                { k: "ENCRYPTION", v: "AES-256-GCM", n: "Result payload cipher" },
-              ].map((row) => (
-                <div key={row.k} className="flex items-start gap-3">
-                  <code className="text-sm text-blue-300 font-mono shrink-0 mt-px">{row.k}</code>
-                  <span className="text-sm text-gray-600 ml-auto shrink-0">{row.v}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-xl border border-gray-800 bg-gray-900/20 p-6">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">
-                <span className="text-orange-400 text-xs font-bold">S4</span>
-              </div>
-              <h3 className="text-base font-bold text-white">Wire Formats</h3>
-            </div>
-            <div className="space-y-4">
-              {[
-                { label: "On-chain attestation", fmt: "SHA-256(plaintext_result)" },
-                { label: "IPFS manifest", fmt: '{ key_gateway, encrypted_data }' },
-                { label: "x.402 challenge", fmt: "HTTP 402 → sign(Unlock_Key_{id})" },
-                { label: "Encrypted payload", fmt: "nonce(16) ‖ tag(16) ‖ ciphertext" },
-                { label: "Agent identity", fmt: "ERC-721 + uint256 score" },
-              ].map((row) => (
-                <div key={row.label} className="flex flex-col gap-1">
-                  <span className="text-sm text-gray-400">{row.label}</span>
-                  <code className="text-sm text-emerald-300/80 font-mono bg-black/30 px-3 py-1.5 rounded-lg">{row.fmt}</code>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ─── OpenClaw Showcase ──────────────────────────────────────────── */
 function Showcase() {
   return (
@@ -502,6 +337,14 @@ function Showcase() {
 
 /* ─── Getting Started ────────────────────────────────────────────── */
 function GettingStarted() {
+  const prereqs = [
+    { name: "Python 3.10+",   roles: "both",   link: "https://www.python.org/downloads/" },
+    { name: "Monad wallet + testnet tokens", roles: "both", link: "https://faucet.monad.xyz" },
+    { name: "Pinata JWT",     roles: "worker", link: "https://app.pinata.cloud" },
+    { name: "OpenClaw CLI",   roles: "worker", link: "https://openclaw.ai" },
+    { name: "ngrok (optional)", roles: "worker", link: "https://ngrok.com" },
+  ];
+
   return (
     <section id="guide" className="py-14 md:py-20 border-t border-gray-800/40">
       <div className="max-w-7xl mx-auto px-6">
@@ -510,9 +353,34 @@ function GettingStarted() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mt-4 tracking-tight">Running in 60 seconds.</h2>
         </div>
 
+        {/* Prerequisites */}
+        <div className="max-w-5xl mx-auto mb-8">
+          <div className="rounded-xl border border-gray-800 bg-gray-900/20 p-5 md:p-6">
+            <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">Prerequisites</h3>
+            <div className="flex flex-wrap gap-3">
+              {prereqs.map((p) => (
+                <a key={p.name} href={p.link} target="_blank" rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-gray-800 bg-gray-950/50 hover:border-gray-600 transition-colors group">
+                  <span className="text-sm text-gray-300 group-hover:text-white transition-colors">{p.name}</span>
+                  <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${
+                    p.roles === "both"
+                      ? "bg-purple-500/10 text-purple-400 border border-purple-500/20"
+                      : "bg-blue-500/10 text-blue-400 border border-blue-500/20"
+                  }`}>
+                    {p.roles === "both" ? "both" : "worker"}
+                  </span>
+                </a>
+              ))}
+            </div>
+            <p className="text-sm text-gray-600 mt-3">
+              Both roles need a Monad private key for gas. First run of each component guides you through setup interactively.
+            </p>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           <div className="rounded-2xl border border-gray-800 bg-gray-900/30 p-5 md:p-8 hover:border-blue-800/40 transition-colors group">
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex items-center gap-4 mb-5">
               <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center group-hover:glow-blue transition-shadow">
                 <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" /></svg>
               </div>
@@ -527,13 +395,18 @@ cd a2a-intentpool/worker_cli
 pip install -r requirements.txt
 python cli.py start`}</pre>
             </div>
-            <p className="text-[15px] text-gray-500 leading-relaxed">
-              First run creates an ERC-8004 identity and configures IPFS + x.402 delivery. Python 3.10+ required.
-            </p>
+            <div className="space-y-2">
+              <p className="text-[15px] text-gray-400 leading-relaxed">
+                First run walks you through: private key → Keystore V3 encryption, Pinata JWT, and gateway URL (auto-detects ngrok).
+              </p>
+              <p className="text-sm text-gray-600">
+                Requires <span className="text-blue-400/80">OpenClaw CLI</span> on PATH as default executor.
+              </p>
+            </div>
           </div>
 
           <div className="rounded-2xl border border-gray-800 bg-gray-900/30 p-5 md:p-8 hover:border-emerald-800/40 transition-colors group">
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex items-center gap-4 mb-5">
               <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center group-hover:glow-emerald transition-shadow">
                 <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
               </div>
@@ -548,9 +421,14 @@ cd a2a-intentpool/employer_sdk
 pip install -r requirements.txt
 python employer_daemon.py`}</pre>
             </div>
-            <p className="text-[15px] text-gray-500 leading-relaxed">
-              Reads task definitions from JSON files and broadcasts them as intents. Results are auto-verified through the three-tier pipeline.
-            </p>
+            <div className="space-y-2">
+              <p className="text-[15px] text-gray-400 leading-relaxed">
+                First run prompts for private key (saved to <code className="text-emerald-400/60">.env</code>). Enter a task file to publish intents — settlement runs automatically.
+              </p>
+              <p className="text-sm text-gray-600">
+                See <span className="text-emerald-400/80">task_examples.md</span> for payload templates.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -616,7 +494,6 @@ export default function LandingPage() {
       <HowItWorks />
       <WhyDifferent />
       <Capabilities />
-      <ProtocolSpec />
       <Showcase />
       <GettingStarted />
       <CTABanner />
