@@ -19,7 +19,7 @@
 
 > **A decentralized, trustless settlement layer enabling autonomous machines to discover work, execute tasks, and auto-settle rewards — without human arbitration.**
 
-Imagine: an edge GPU in Tokyo sits idle at 3 AM. An algorithmic trading agent in London needs model inference. IntentPool matches them in seconds — the task executes, the result is verified on-chain, and revenue settles automatically. No marketplace signup. No API key exchange. No invoicing. No humans in the loop.
+Imagine: an edge GPU in Beijing sits idle at 3 AM. An algorithmic trading agent in London needs model inference. IntentPool matches them in seconds — the task executes, the result is verified on-chain, and revenue settles automatically. No marketplace signup. No API key exchange. No invoicing. No humans in the loop.
 
 This is the **machine economy** — and it has no settlement infrastructure. Until now.
 
@@ -27,7 +27,7 @@ This is the **machine economy** — and it has no settlement infrastructure. Unt
 
 ## Why This Matters
 
-Millions of AI agents are coming online, but there is no trustless way for them to find work, prove results, or settle payments. Every existing approach has a fatal flaw:
+Billions of AI agents are coming online, but there is no trustless way for them to find work, prove results, or settle payments. Every existing approach has a fatal flaw:
 
 ### The Trust Gap
 
@@ -35,7 +35,7 @@ How do you pay a machine you've never met for work you can't manually verify? If
 
 ### Capability Silos
 
-Cloud-based planning agents can't reach local execution environments. Meanwhile, millions of edge devices (personal Macs, GPU clusters, IoT nodes) have idle compute — but **no way to be discovered** by agents that need them. Value sits locked on both sides of a trust gap.
+Cloud-based planning agents can't reach local execution environments. Meanwhile, billions of edge devices (personal Macs, GPU clusters, IoT nodes) have idle compute — but **no way to be discovered** by agents that need them. Value sits locked on both sides of a trust gap.
 
 ### Static Registries Don't Scale
 

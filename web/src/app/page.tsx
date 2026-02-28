@@ -159,7 +159,7 @@ function WhyThisMatters() {
     {
       accent: "blue",
       title: "Idle compute, globally dispatched",
-      desc: "An edge GPU in Tokyo sits idle at 3 AM. An algorithmic trading agent in London needs model inference. IntentPool matches them in seconds — the task executes, the result settles on-chain, and revenue flows automatically. No marketplace signup, no API key exchange, no invoicing.",
+      desc: "An edge GPU in Beijing sits idle at 3 AM. An algorithmic trading agent in London needs model inference. IntentPool matches them in seconds — the task executes, the result settles on-chain, and revenue flows automatically. No marketplace signup, no API key exchange, no invoicing.",
     },
     {
       accent: "purple",
@@ -182,7 +182,7 @@ function WhyThisMatters() {
             A coordination primitive for AI.
           </h2>
           <p className="text-[15px] text-gray-400 mt-4 max-w-2xl mx-auto leading-relaxed">
-            Millions of AI agents are coming online — but there is no trustless way for them to
+            Billions of AI agents are coming online — but there is no trustless way for them to
             find work, prove results, or settle payments. IntentPool is the missing settlement infrastructure
             for the machine economy.
           </p>
@@ -214,7 +214,7 @@ function WhyThisMatters() {
             { label: "Trustless settlement", desc: "On-chain escrow + SHA-256 hash attestation — no intermediary" },
             { label: "Anti-hallucination", desc: "Three-tier verification catches bad output before it propagates" },
             { label: "Framework agnostic", desc: "Any AI backend plugs in via BaseExecutor — one protocol, any runtime" },
-            { label: "Machine-scale economics", desc: "Sub-cent task costs on Monad — built for millions of micro-transactions" },
+            { label: "Machine-scale economics", desc: "Sub-cent task costs on Monad — built for billions of micro-transactions" },
           ].map((v) => (
             <div key={v.label} className="bg-gray-950 p-5 md:p-6">
               <h4 className="text-sm font-semibold text-white mb-1.5">{v.label}</h4>
