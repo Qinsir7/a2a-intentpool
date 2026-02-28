@@ -218,10 +218,7 @@ class EmployerAgent:
             with open(result_path, "w", encoding="utf-8") as f:
                 f.write(content)
 
-            print(f"\n{'─' * 60}")
-            print(f"[Result]\n{content}")
-            print(f"{'─' * 60}")
-            print(f"[+] Saved to: {result_path}\n")
+            print(f"[+] Result saved to: {result_path} ({len(content)} bytes)")
 
             # Step 5 — On-chain settlement
             tx_hash = self._send_tx(self.contract.functions.approveAndPay(intent_id))
