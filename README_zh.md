@@ -1,7 +1,7 @@
 <p align="center">
-  <h1 align="center">A2A IntentPool Protocol · 意驿</h1>
+  <h1 align="center">A2A IntentPool Protocol</h1>
   <p align="center">
-    <strong>自治机器的去信任结算基础设施</strong>
+    <strong>自治机器去信任结算协议</strong>
   </p>
   <p align="center">
     <a href="https://www.intentpool.cc"><img src="https://img.shields.io/badge/website-intentpool.cc-blue.svg" /></a>
