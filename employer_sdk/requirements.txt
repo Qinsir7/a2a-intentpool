@@ -1,5 +1,5 @@
-web3
-eth-account
-requests
-python-dotenv
-pycryptodome
+web3>=7.0,<8.0
+eth-account>=0.13,<0.14
+requests>=2.28,<3.0
+python-dotenv>=1.0,<2.0
+pycryptodome>=3.17,<4.0

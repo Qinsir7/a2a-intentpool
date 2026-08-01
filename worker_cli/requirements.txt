@@ -1,6 +1,6 @@
-web3
-eth-account
-requests
-flask
-flask-cors
-pycryptodome
+web3>=7.0,<8.0
+eth-account>=0.13,<0.14
+requests>=2.28,<3.0
+flask>=3.0,<4.0
+flask-cors>=6.0,<7.0
+pycryptodome>=3.17,<4.0
